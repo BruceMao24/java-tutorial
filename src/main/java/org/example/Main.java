@@ -19,15 +19,16 @@ public class Main {
             System.out.println("i = " + i);
         }
 
-        Person ming = new Person();
-        ming.name = "xiao ming";
-        ming.age = 18;
-        System.out.println(ming.name); // 访问字段name
+        Person ming = new Person("ming", 18);
+//        ming.setName("Ming");
+//        ming.setAge(18);
+        System.out.println(ming.getName()); // 访问字段name
 
-        Person hong = new Person();
-        hong.name = "hong hong";
-        hong.age = 19;
-        System.out.println(hong.name);
+        Person hong = new Person("hong hong", 190);
+//        hong.setName("hong hong");
+//        hong.setAge(190);
+        hong.setName("hong hong ", "ming");
+        System.out.println(hong.getName());
     }
 
     public static int add(int a, int b) {
@@ -36,9 +37,68 @@ public class Main {
 
 }
 
+// 面向对象编程OOP
 class  Person {
-    public String name;
-    public int age;
+    protected String name; // 姓名
+    protected int age; // 年龄
+
+    // 构造方法
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    // 构造方法
+    public Person() {}
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("name is null");
+        }
+        this.name = name;
+    }
+
+    // 重载
+    public void setName(String name1, String name2) {
+        if (name1 == null || name1.isBlank() || name2 == null || name2.isBlank()) {
+            throw new IllegalArgumentException("name is null");
+        }
+        this.name = name1 +  name2;
+    }
+
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        if (age < 0 || age > 100) {
+            throw new IllegalArgumentException("age must be between 0 and 100");
+        }
+        this.age = age;
+    }
+}
+
+// 继承
+class Student extends  Person {
+    private String score;
+
+    public String getScore() {
+        return score;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
+    }
+
+    public void hello() {
+        // 子类继承无法直接访问父类的private变量，需要将父类的private变量改成protected
+        System.out.println("hello" + name);
+    }
 }
 
 class Book {
