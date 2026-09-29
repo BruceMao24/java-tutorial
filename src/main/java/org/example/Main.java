@@ -36,6 +36,7 @@ public class Main {
         // TODO: 定义PrimaryStudent，从Student继承，新增grade字段:
         Student ps = new PrimaryStudent("小军", 9, 100, 5);
         System.out.println(ps.getScore());
+        ps.run();
     }
 
     public static int add(int a, int b) {
@@ -88,11 +89,21 @@ class  Person {
         }
         this.age = age;
     }
+
+    public void run() {
+        System.out.println("Person run!");
+    }
 }
 
 // 继承
 class Student extends  Person {
     private int score;
+
+    // super关键字调用父类的构造方法Person(String, int)
+    public Student(String name, int age, int score) {
+        super(name, age);
+        this.score = score;
+    }
 
     public int getScore() {
         return score;
@@ -107,11 +118,11 @@ class Student extends  Person {
         System.out.println("hello" + name);
     }
 
-    // super关键字调用父类的构造方法Person(String, int)
-    public Student(String name, int age, int score) {
-        super(name, age);
-        this.score = score;
+    @Override
+    public void run() {
+        System.out.println("Student run!");
     }
+
 }
 
 class PrimaryStudent extends Student {
