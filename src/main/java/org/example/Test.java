@@ -4,7 +4,6 @@ public class Test {
     public static void main(String[] args) {
         // 实现给一个工资收入和稿费收入的小伙伴算税
         Income[] incomes = new Income[] {
-                new Income(3000.00),
                 new Salary(7000.00),
                 new WritingSalary(13000.00),
         };
@@ -20,15 +19,13 @@ public class Test {
     }
 }
 
-class Income {
+abstract class Income {
     protected double income;
     public Income(double income) {
         this.income = income;
     }
 
-    public double getTax() {
-        return income * 0.1;
-    }
+    public abstract double getTax();
 }
 
 class Salary extends Income {
