@@ -29,6 +29,13 @@ public class Main {
 //        hong.setAge(190);
         hong.setName("hong hong ", "ming");
         System.out.println(hong.getName());
+
+        Student stu = new Student("stu", 18, 98);
+        System.out.println(stu.getName());
+
+        // TODO: 定义PrimaryStudent，从Student继承，新增grade字段:
+        Student ps = new PrimaryStudent("小军", 9, 100, 5);
+        System.out.println(ps.getScore());
     }
 
     public static int add(int a, int b) {
@@ -85,19 +92,33 @@ class  Person {
 
 // 继承
 class Student extends  Person {
-    private String score;
+    private int score;
 
-    public String getScore() {
+    public int getScore() {
         return score;
     }
 
-    public void setScore(String score) {
+    public void setScore(int score) {
         this.score = score;
     }
 
     public void hello() {
         // 子类继承无法直接访问父类的private变量，需要将父类的private变量改成protected
         System.out.println("hello" + name);
+    }
+
+    // super关键字调用父类的构造方法Person(String, int)
+    public Student(String name, int age, int score) {
+        super(name, age);
+        this.score = score;
+    }
+}
+
+class PrimaryStudent extends Student {
+    private int grade;
+    public PrimaryStudent(String name, int age, int score, int grade) {
+        super(name, age, score);
+        this.grade = grade;
     }
 }
 
