@@ -37,6 +37,12 @@ public class Main {
         Student ps = new PrimaryStudent("小军", 9, 100, 5);
         System.out.println(ps.getScore());
         ps.run();
+
+        Person p1 = new Person("p1",16);
+        System.out.println(Person.getNumber());
+
+        Person p2 = new Person("p2",16);
+        System.out.println(Person.getNumber());
     }
 
     public static int add(int a, int b) {
@@ -49,11 +55,14 @@ public class Main {
 class  Person {
     protected String name; // 姓名
     protected int age; // 年龄
+    public static int number = 0;
+
 
     // 构造方法
     public Person(String name, int age) {
         this.name = name;
         this.age = age;
+        number++;
     }
 
     // 构造方法
@@ -92,6 +101,10 @@ class  Person {
 
     public void run() {
         System.out.println("Person run!");
+    }
+
+    public static int getNumber() {
+        return number;
     }
 }
 
