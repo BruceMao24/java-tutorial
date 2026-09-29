@@ -53,3 +53,6 @@ class WritingSalary extends Income {
         return 0;
     }
 }
+
+// 抽象类的本质是
+// 上层代码只定义规范 不需要子类就可以实现业务逻辑 具体的业务逻辑由不同的子类实现，调用者并不关心
