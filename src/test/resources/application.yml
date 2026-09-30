@@ -1,0 +1,19 @@
+# 测试专属配置：优先级高于 src/main/resources 的同名文件
+# 指向独立的测试库，跑测试绝不动开发库数据
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/java_tutorial_test?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: tutorial
+    password: Tutorial@123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+greeting:
+  language: zh
+
+app:
+  company: Example Inc. (Test)
+
+# 测试时不打印 SQL，保持输出干净
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl

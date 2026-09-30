@@ -34,6 +34,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Spring Boot 4 起 MockMvc 自动配置拆到了独立模块 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-webmvc-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
         <!-- MyBatis-Plus（适配 Spring Boot 4） -->
         <dependency>
             <groupId>com.baomidou</groupId>
