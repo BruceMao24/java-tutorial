@@ -81,4 +81,18 @@ public class BookController {
         log.info("删除图书 id={}, 结果={}", id, ok);
         return ok ? Result.ok() : Result.error(404, "记录不存在");
     }
+
+    /** 事务实验（无事务）：POST /books/tx-demo/no-tx —— 失败后书 A 会留在库里 */
+    @PostMapping("/tx-demo/no-tx")
+    public Result<Void> txDemoNoTx() {
+        bookService.addPairWithoutTx();
+        return Result.ok();
+    }
+
+    /** 事务实验（有事务）：POST /books/tx-demo/with-tx —— 失败后整体回滚 */
+    @PostMapping("/tx-demo/with-tx")
+    public Result<Void> txDemoWithTx() {
+        bookService.addPairWithTx();
+        return Result.ok();
+    }
 }

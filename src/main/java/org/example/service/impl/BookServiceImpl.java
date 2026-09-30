@@ -8,7 +8,9 @@ import org.example.entity.Book;
 import org.example.mapper.BookMapper;
 import org.example.service.BookService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 
 /**
@@ -42,6 +44,34 @@ public class BookServiceImpl extends AbstractRepository<BookMapper, Book> implem
 
         // Page 对象既是入参（第几页/每页几条）也是出参（总条数/当前页数据）
         return bookMapper.selectPage(new Page<>(pageNum, pageSize), wrapper);
+    }
+
+    @Override
+    public void addPairWithoutTx() {
+        // 第一步：插入书 A（没有事务，这条 SQL 立即提交）
+        save(demoBook("TX-NOTX"));
+        // 第二步：模拟后续操作失败（如下游接口报错、唯一约束冲突）
+        throw new RuntimeException("模拟第二步失败（无事务）");
+    }
+
+    /**
+     * @Transactional：方法内的所有数据库操作在同一个事务里
+     * 方法抛出异常 → Spring 自动回滚（撤销已执行的 SQL）
+     * 方法正常返回 → 自动提交
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void addPairWithTx() {
+        save(demoBook("TX-WITHTX"));
+        throw new RuntimeException("模拟第二步失败（有事务）");
+    }
+
+    private Book demoBook(String title) {
+        Book book = new Book();
+        book.setTitle(title);
+        book.setAuthor("tx-demo");
+        book.setPrice(new BigDecimal("9.9"));
+        return book;
     }
 
     @Override
