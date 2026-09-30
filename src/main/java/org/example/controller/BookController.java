@@ -3,6 +3,7 @@ package org.example.controller;
 import org.example.common.Result;
 import org.example.entity.Book;
 import org.example.service.BookService;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.annotation.Validated;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -37,6 +39,17 @@ public class BookController {
     @GetMapping
     public Result<List<Book>> list() {
         return Result.ok(bookService.list());
+    }
+
+    /**
+     * 分页 + 条件查询：GET /books/page?pageNum=1&pageSize=5&keyword=Java
+     * keyword 可省略，省略时查全部
+     */
+    @GetMapping("/page")
+    public Result<IPage<Book>> page(@RequestParam(defaultValue = "1") int pageNum,
+                                    @RequestParam(defaultValue = "5") int pageSize,
+                                    @RequestParam(required = false) String keyword) {
+        return Result.ok(bookService.pageBooks(pageNum, pageSize, keyword));
     }
 
     /** 查询单个：GET /books/1 */

@@ -48,6 +48,13 @@
             <version>3.5.17</version>
         </dependency>
 
+        <!-- MP 3.5.9 起分页插件拆到了独立模块（依赖 jsqlparser） -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-jsqlparser</artifactId>
+            <version>3.5.17</version>
+        </dependency>
+
         <!-- MySQL 驱动（版本由 spring-boot-starter-parent 管理） -->
         <dependency>
             <groupId>com.mysql</groupId>
