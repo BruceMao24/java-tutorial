@@ -1,6 +1,6 @@
 package org.example.controller;
 
-import org.example.service.HelloService;
+import org.example.service.GreetingService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,17 +12,18 @@ import java.util.Map;
 
 /**
  * 控制层：只负责接收请求、调用 Service、返回响应，不写业务逻辑
+ * 注意：依赖的是接口 GreetingService，而不是任何具体实现类
  */
 @RestController
 public class HelloController {
 
-    private final HelloService helloService;
+    private final GreetingService greetingService;
 
     /**
-     * 构造器注入：Spring 容器自动把 HelloService 的实例传进来
+     * 构造器注入：Spring 容器自动把 GreetingService 的实现传进来
      */
-    public HelloController(HelloService helloService) {
-        this.helloService = helloService;
+    public HelloController(GreetingService greetingService) {
+        this.greetingService = greetingService;
     }
 
     @GetMapping("/hello")
@@ -30,7 +31,7 @@ public class HelloController {
         return Map.of(
                 "code", 0,
                 "message", "Hello, Spring Boot!",
-                "data", helloService.appInfo()
+                "data", Map.of("name", "java-tutorial", "port", 8080)
         );
     }
 
@@ -39,7 +40,7 @@ public class HelloController {
      */
     @GetMapping("/hello/path/{name}")
     public Map<String, Object> helloPath(@PathVariable String name) {
-        return Map.of("code", 0, "message", helloService.greet(name), "from", "@PathVariable");
+        return Map.of("code", 0, "message", greetingService.greet(name), "from", "@PathVariable");
     }
 
     /**
@@ -48,7 +49,7 @@ public class HelloController {
      */
     @GetMapping("/hello/query")
     public Map<String, Object> helloQuery(@RequestParam(defaultValue = "world") String name) {
-        return Map.of("code", 0, "message", helloService.greet(name), "from", "@RequestParam");
+        return Map.of("code", 0, "message", greetingService.greet(name), "from", "@RequestParam");
     }
 
     /**
@@ -57,7 +58,7 @@ public class HelloController {
      */
     @PostMapping("/hello/body")
     public Map<String, Object> helloBody(@RequestBody User user) {
-        return Map.of("code", 0, "message", helloService.greetUser(user.name(), user.age()), "from", "@RequestBody");
+        return Map.of("code", 0, "message", greetingService.greetUser(user.name(), user.age()), "from", "@RequestBody");
     }
 
     /**
