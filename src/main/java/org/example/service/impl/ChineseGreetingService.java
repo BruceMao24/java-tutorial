@@ -1,5 +1,8 @@
-package org.example.service;
+package org.example.service.impl;
 
+import org.example.service.GreetingService;
+
+import org.example.service.GreetingService;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
