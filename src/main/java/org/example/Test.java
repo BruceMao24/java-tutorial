@@ -43,6 +43,10 @@ class WritingSalary implements Income {
     private final double income;
     public WritingSalary(double income) {this.income = income;};
 
+    public double getIncome() {
+        return income;
+    }
+
     @Override
     public double getTax() {
         return 0;

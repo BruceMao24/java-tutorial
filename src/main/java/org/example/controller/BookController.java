@@ -2,6 +2,7 @@ package org.example.controller;
 
 import org.example.entity.Book;
 import org.example.service.BookService;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,14 +42,14 @@ public class BookController {
 
     /** 新增：POST /books  Body: {"title":"...", "author":"...", "price":39.5} */
     @PostMapping
-    public Map<String, Object> create(@RequestBody Book book) {
+    public Map<String, Object> create(@Validated @RequestBody Book book) {
         bookService.save(book);
         return Map.of("code", 0, "message", "创建成功", "id", book.getId());
     }
 
     /** 更新：PUT /books/1  Body: {"title":"...", "price":45} */
     @PutMapping("/{id}")
-    public Map<String, Object> update(@PathVariable Long id, @RequestBody Book book) {
+    public Map<String, Object> update(@PathVariable Long id, @Validated @RequestBody Book book) {
         book.setId(id);
         boolean ok = bookService.updateById(book);
         return Map.of("code", 0, "message", ok ? "更新成功" : "记录不存在");

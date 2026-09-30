@@ -3,6 +3,10 @@ package org.example.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
 
@@ -16,10 +20,14 @@ public class Book {
     @TableId(type = IdType.AUTO)
     private Long id;
 
+    @NotBlank(message = "书名不能为空")
+    @Size(max = 100, message = "书名不能超过 100 个字符")
     private String title;
 
     private String author;
 
+    @NotNull(message = "价格不能为空")
+    @DecimalMin(value = "0.0", inclusive = false, message = "价格必须大于 0")
     private BigDecimal price;
 
     public Long getId() {

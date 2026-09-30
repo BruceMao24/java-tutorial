@@ -33,7 +33,6 @@ public class Main {
         Student stu = new Student("stu", 18, 98);
         System.out.println(stu.getName());
 
-        // TODO: 定义PrimaryStudent，从Student继承，新增grade字段:
         Student ps = new PrimaryStudent("小军", 9, 100, 5);
         System.out.println(ps.getScore());
         ps.run();
@@ -143,6 +142,10 @@ class PrimaryStudent extends Student {
     public PrimaryStudent(String name, int age, int score, int grade) {
         super(name, age, score);
         this.grade = grade;
+    }
+
+    public int getGrade() {
+        return grade;
     }
 }
 
