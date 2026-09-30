@@ -3,6 +3,12 @@ spring:
     name: java-tutorial
   profiles:
     active: dev   # 默认激活开发环境
+  # 数据源是各环境共用的，放公共配置；真实生产中密码不入库，改用环境变量注入
+  datasource:
+    url: jdbc:mysql://localhost:3306/java_tutorial?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: tutorial
+    password: Tutorial@123
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
 # 自定义配置（演示用）
 app:
