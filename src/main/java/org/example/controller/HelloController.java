@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import org.example.common.Result;
 import org.example.service.GreetingService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,20 +35,16 @@ public class HelloController {
     }
 
     @GetMapping("/hello")
-    public Map<String, Object> hello() {
-        return Map.of(
-                "code", 0,
-                "message", "Hello, Spring Boot!",
-                "data", Map.of("name", "java-tutorial", "company", company)
-        );
+    public Result<Map<String, Object>> hello() {
+        return Result.ok(Map.of("name", "java-tutorial", "company", company));
     }
 
     /**
      * 路径参数：GET /hello/path/zhangsan
      */
     @GetMapping("/hello/path/{name}")
-    public Map<String, Object> helloPath(@PathVariable String name) {
-        return Map.of("code", 0, "message", greetingService.greet(name), "from", "@PathVariable");
+    public Result<Map<String, Object>> helloPath(@PathVariable String name) {
+        return Result.ok(Map.of("message", greetingService.greet(name), "from", "@PathVariable"));
     }
 
     /**
@@ -55,8 +52,8 @@ public class HelloController {
      * defaultValue 让 name 可省略：GET /hello/query
      */
     @GetMapping("/hello/query")
-    public Map<String, Object> helloQuery(@RequestParam(defaultValue = "world") String name) {
-        return Map.of("code", 0, "message", greetingService.greet(name), "from", "@RequestParam");
+    public Result<Map<String, Object>> helloQuery(@RequestParam(defaultValue = "world") String name) {
+        return Result.ok(Map.of("message", greetingService.greet(name), "from", "@RequestParam"));
     }
 
     /**
@@ -64,8 +61,8 @@ public class HelloController {
      * Spring 自动把 JSON 反序列化成 User 对象
      */
     @PostMapping("/hello/body")
-    public Map<String, Object> helloBody(@RequestBody User user) {
-        return Map.of("code", 0, "message", greetingService.greetUser(user.name(), user.age()), "from", "@RequestBody");
+    public Result<Map<String, Object>> helloBody(@RequestBody User user) {
+        return Result.ok(Map.of("message", greetingService.greetUser(user.name(), user.age()), "from", "@RequestBody"));
     }
 
     /**

@@ -38,9 +38,11 @@ public class Main {
         ps.run();
 
         Person p1 = new Person("p1",16);
+        System.out.println(p1.getName());
         System.out.println(Person.getNumber());
 
         Person p2 = new Person("p2",16);
+        System.out.println(p2.getName());
         System.out.println(Person.getNumber());
     }
 

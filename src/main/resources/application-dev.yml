@@ -15,3 +15,7 @@ spring:
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl   # 控制台打印 SQL，学习阶段方便观察
+
+logging:
+  level:
+    org.example: debug   # 自己包的日志级别调到 debug，框架保持默认 info
