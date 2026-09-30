@@ -1,6 +1,7 @@
 package org.example.controller;
 
 import org.example.service.GreetingService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +21,12 @@ public class HelloController {
     private final GreetingService greetingService;
 
     /**
+     * 读取配置文件里的自定义配置 app.company
+     */
+    @Value("${app.company}")
+    private String company;
+
+    /**
      * 构造器注入：Spring 容器自动把 GreetingService 的实现传进来
      */
     public HelloController(GreetingService greetingService) {
@@ -31,7 +38,7 @@ public class HelloController {
         return Map.of(
                 "code", 0,
                 "message", "Hello, Spring Boot!",
-                "data", Map.of("name", "java-tutorial", "port", 8080)
+                "data", Map.of("name", "java-tutorial", "company", company)
         );
     }
 

@@ -1,14 +1,14 @@
 package org.example.service;
 
-import org.springframework.context.annotation.Primary;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
 /**
  * 英文问候实现
- * @Primary：容器里有多个 GreetingService 实现时，优先注入我这个
+ * 仅当 greeting.language=en 时才创建这个 Bean
  */
-// @Primary
 @Service
+@ConditionalOnProperty(name = "greeting.language", havingValue = "en")
 public class EnglishGreetingService implements GreetingService {
 
     @Override

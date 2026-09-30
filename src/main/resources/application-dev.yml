@@ -1,0 +1,6 @@
+# 开发环境：本机调试用
+server:
+  port: 8080
+
+greeting:
+  language: zh   # 开发环境用中文问候

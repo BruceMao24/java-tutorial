@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: java-tutorial
+  profiles:
+    active: dev   # 默认激活开发环境
+
+# 自定义配置（演示用）
+app:
+  company: Example Inc.
