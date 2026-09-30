@@ -1,0 +1,58 @@
+package org.example;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
+
+/**
+ * 第一个 REST 接口示例
+ */
+@RestController
+public class HelloController {
+
+    @GetMapping("/hello")
+    public Map<String, Object> hello() {
+        return Map.of(
+                "code", 0,
+                "message", "Hello, Spring Boot!",
+                "data", Map.of("name", "java-tutorial", "port", 8080)
+        );
+    }
+
+    /**
+     * 路径参数：GET /hello/path/zhangsan
+     */
+    @GetMapping("/hello/path/{name}")
+    public Map<String, Object> helloPath(@PathVariable String name) {
+        return Map.of("code", 0, "message", "你好, " + name, "from", "@PathVariable");
+    }
+
+    /**
+     * 查询参数：GET /hello/query?name=zhangsan
+     * defaultValue 让 name 可省略：GET /hello/query
+     */
+    @GetMapping("/hello/query")
+    public Map<String, Object> helloQuery(@RequestParam(defaultValue = "world") String name) {
+        return Map.of("code", 0, "message", "你好, " + name, "from", "@RequestParam");
+    }
+
+    /**
+     * 请求体：POST /hello/body  Body: {"name": "zhangsan", "age": 18}
+     * Spring 自动把 JSON 反序列化成 User 对象
+     */
+    @PostMapping("/hello/body")
+    public Map<String, Object> helloBody(@RequestBody User user) {
+        return Map.of("code", 0, "message", "你好, " + user.name() + "，年龄 " + user.age(), "from", "@RequestBody");
+    }
+
+    /**
+     * 请求体对应的 Java 类型（record 是不可变数据类的简洁写法）
+     */
+    public record User(String name, Integer age) {
+    }
+}
