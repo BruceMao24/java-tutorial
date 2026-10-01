@@ -1,4 +1,4 @@
-package org.example;
+package org.example.javanotes;
 
 public class Test {
     public static void main(String[] args) {

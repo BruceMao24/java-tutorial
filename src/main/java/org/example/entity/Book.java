@@ -2,6 +2,7 @@ package org.example.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
@@ -29,6 +30,14 @@ public class Book {
     @NotNull(message = "价格不能为空")
     @DecimalMin(value = "0.0", inclusive = false, message = "价格必须大于 0")
     private BigDecimal price;
+
+    /**
+     * 展示标签（作者·书名）——不在表里的字段
+     * @TableField(exist = false) 告诉 MyBatis-Plus：这不是表列，别生成进 SQL
+     * 值由 Service 查询后在内存里填充
+     */
+    @TableField(exist = false)
+    private String displayLabel;
 
     public Long getId() {
         return id;
@@ -60,5 +69,13 @@ public class Book {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public String getDisplayLabel() {
+        return displayLabel;
+    }
+
+    public void setDisplayLabel(String displayLabel) {
+        this.displayLabel = displayLabel;
     }
 }

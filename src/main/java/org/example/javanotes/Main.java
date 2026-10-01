@@ -1,4 +1,4 @@
-package org.example;
+package org.example.javanotes;
 
 //TIP 要<b>运行</b>代码，请按 <shortcut actionId="Run"/> 或
 // 点击装订区域中的 <icon src="AllIcons.Actions.Execute"/> 图标。
@@ -151,13 +151,14 @@ class PrimaryStudent extends Student {
     }
 }
 
-class Book {
+// 改名 BookDemo，避免和业务实体 org.example.entity.Book 混淆
+class BookDemo {
     private String name;
     private String author;
     private String isbn;
     private double price;
 
-    public Book(String name, String author, String isbn, double price) {
+    public BookDemo(String name, String author, String isbn, double price) {
         this.name = name;
         this.author = author;
         this.isbn = isbn;

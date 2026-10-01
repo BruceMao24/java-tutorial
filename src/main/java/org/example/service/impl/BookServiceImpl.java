@@ -10,6 +10,7 @@ import org.example.service.BookService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Collection;
 
@@ -30,6 +31,16 @@ public class BookServiceImpl extends AbstractRepository<BookMapper, Book> implem
     @Override
     public BookMapper getBaseMapper() {
         return bookMapper;
+    }
+
+    @Override
+    public Book getById(Serializable id) {
+        Book book = bookMapper.selectById(id);
+        if (book != null) {
+            // 非表字段：查出来之后在内存里拼好，随对象返回给前端
+            book.setDisplayLabel(book.getAuthor() + " · " + book.getTitle());
+        }
+        return book;
     }
 
     @Override
