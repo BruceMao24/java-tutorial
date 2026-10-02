@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import org.example.common.ErrorCode;
 import org.example.common.Result;
 import org.example.entity.Book;
 import org.example.service.BookService;
@@ -71,7 +72,7 @@ public class BookController {
     public Result<Void> update(@PathVariable Long id, @Validated @RequestBody Book book) {
         book.setId(id);
         boolean ok = bookService.updateById(book);
-        return ok ? Result.ok() : Result.error(404, "记录不存在");
+        return ok ? Result.ok() : Result.error(ErrorCode.BOOK_NOT_FOUND);
     }
 
     /** 删除：DELETE /books/1 */
@@ -79,7 +80,7 @@ public class BookController {
     public Result<Void> delete(@PathVariable Long id) {
         boolean ok = bookService.removeById(id);
         log.info("删除图书 id={}, 结果={}", id, ok);
-        return ok ? Result.ok() : Result.error(404, "记录不存在");
+        return ok ? Result.ok() : Result.error(ErrorCode.BOOK_NOT_FOUND);
     }
 
     /** 事务实验（无事务）：POST /books/tx-demo/no-tx —— 失败后书 A 会留在库里 */

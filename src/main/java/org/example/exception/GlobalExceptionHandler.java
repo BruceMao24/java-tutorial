@@ -1,5 +1,6 @@
 package org.example.exception;
 
+import org.example.common.ErrorCode;
 import org.example.common.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,17 +33,17 @@ public class GlobalExceptionHandler {
                 .map(FieldError::getDefaultMessage)
                 .collect(Collectors.joining("；"));
         log.warn("参数校验失败: {}", detail);
-        return Result.error(400, "参数校验失败：" + detail);
+        return Result.error(ErrorCode.PARAM_INVALID, detail);
     }
 
     /**
-     * 兜底：其他所有未处理的异常，返回 500，避免把堆栈直接暴露给调用方
-     * 异常堆栈打进日志，方便排查
+     * 兜底：其他所有未处理的异常，返回 500
+     * 注意：对外只给通用文案，e.getMessage() 可能带 SQL/内部细节，只能进日志
      */
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public Result<Void> handleException(Exception e) {
         log.error("服务器内部错误", e);
-        return Result.error(500, "服务器内部错误：" + e.getMessage());
+        return Result.error(ErrorCode.INTERNAL_ERROR);
     }
 }
