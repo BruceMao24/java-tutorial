@@ -1,5 +1,6 @@
 package org.example.exception;
 
+import java.util.stream.Collectors;
 import org.example.common.ErrorCode;
 import org.example.common.Result;
 import org.slf4j.Logger;
@@ -10,8 +11,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import java.util.stream.Collectors;
+import org.springframework.web.servlet.NoHandlerFoundException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 /**
  * 全局异常处理器：集中处理所有 Controller 抛出的异常，
@@ -34,6 +35,20 @@ public class GlobalExceptionHandler {
                 .collect(Collectors.joining("；"));
         log.warn("参数校验失败: {}", detail);
         return Result.error(ErrorCode.PARAM_INVALID, detail);
+    }
+
+    /**
+     * 资源/接口不存在（如浏览器自动请求的 /favicon.ico、拼错的接口路径）
+     * 属于正常 404，不该走兜底打 error 日志、更不该返回 500
+     */
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler({
+        NoResourceFoundException.class,
+        NoHandlerFoundException.class,
+    })
+    public Result<Void> handleNotFound(Exception e) {
+        log.debug("资源不存在: {}", e.getMessage());
+        return Result.error(ErrorCode.NOT_FOUND);
     }
 
     /**
