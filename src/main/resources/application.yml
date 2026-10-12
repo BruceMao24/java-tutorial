@@ -13,3 +13,8 @@ spring:
 # 自定义配置（演示用）
 app:
   company: Example Inc.
+
+# JWT 配置
+jwt:
+  secret: your-256-bit-secret-key-for-jwt-token-generation-please-change-in-production
+  expiration: 86400000  # 24 小时(毫秒)

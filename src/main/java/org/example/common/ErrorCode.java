@@ -18,6 +18,18 @@ public enum ErrorCode {
     /** 请求的资源/接口不存在 */
     NOT_FOUND(20002, "资源不存在"),
 
+    /** 用户名已存在 */
+    USERNAME_EXISTS(20003, "用户名已存在"),
+
+    /** 用户名或密码错误 */
+    LOGIN_FAILED(20004, "用户名或密码错误"),
+
+    /** 两次密码不一致 */
+    PASSWORD_MISMATCH(20005, "两次密码不一致"),
+
+    /** 未登录或 token 无效 */
+    UNAUTHORIZED(20006, "未登录或登录已过期"),
+
     /** 系统内部错误 */
     INTERNAL_ERROR(50001, "系统内部错误");
 

@@ -52,6 +52,16 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * 业务异常(Service 层主动抛出)
+     * 返回 200 + 业务错误码,由前端根据 code 判断
+     */
+    @ExceptionHandler(BusinessException.class)
+    public Result<Void> handleBusiness(BusinessException e) {
+        log.warn("业务异常: {}", e.getMessage());
+        return Result.error(e.getErrorCode());
+    }
+
+    /**
      * 兜底：其他所有未处理的异常，返回 500
      * 注意：对外只给通用文案，e.getMessage() 可能带 SQL/内部细节，只能进日志
      */
