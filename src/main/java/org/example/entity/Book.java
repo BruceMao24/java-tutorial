@@ -4,31 +4,24 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
 
 /**
- * 图书实体：对应数据库 book 表
+ * 图书实体:对应数据库 book 表
+ * 只负责数据库映射,不承担接口校验职责(校验规则在 DTO 里)
  */
 @TableName("book")
 public class Book {
 
-    /** 主键，自增 */
+    /** 主键,自增 */
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    @NotBlank(message = "书名不能为空")
-    @Size(max = 100, message = "书名不能超过 100 个字符")
     private String title;
 
     private String author;
 
-    @NotNull(message = "价格不能为空")
-    @DecimalMin(value = "0.0", inclusive = false, message = "价格必须大于 0")
     private BigDecimal price;
 
     /**

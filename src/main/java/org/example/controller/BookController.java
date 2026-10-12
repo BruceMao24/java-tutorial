@@ -2,11 +2,14 @@ package org.example.controller;
 
 import org.example.common.ErrorCode;
 import org.example.common.Result;
+import org.example.dto.BookCreateDTO;
+import org.example.dto.BookUpdateDTO;
 import org.example.entity.Book;
 import org.example.service.BookService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -59,18 +62,31 @@ public class BookController {
         return Result.ok(bookService.getById(id));
     }
 
-    /** 新增：POST /books  Body: {"title":"...", "author":"...", "price":39.5} */
+    /**
+     * 新增：POST /books  Body: {"title":"...", "author":"...", "price":39.5, "categoryCode":"tech"}
+     * categoryCode 不入 book 表,仅作业务参数示例(真实场景可能用于校验、关联其他表等)
+     */
     @PostMapping
-    public Result<Long> create(@Validated @RequestBody Book book) {
+    public Result<Long> create(@Validated @RequestBody BookCreateDTO dto) {
+        // DTO → Entity:拷贝同名属性(title/author/price),categoryCode 不入库
+        Book book = new Book();
+        BeanUtils.copyProperties(dto, book);
+
         bookService.save(book);
-        log.info("新增图书: {}, 作者: {}", book.getTitle(), book.getAuthor());
+        log.info("新增图书: {}, 作者: {}, 分类: {}", book.getTitle(), book.getAuthor(), dto.getCategoryCode());
         return Result.ok(book.getId());
     }
 
-    /** 更新：PUT /books/1  Body: {"title":"...", "price":45} */
+    /**
+     * 更新：PUT /books/1  Body: {"title":"...", "price":45}
+     * id 由路径参数提供,防止前端篡改
+     */
     @PutMapping("/{id}")
-    public Result<Void> update(@PathVariable Long id, @Validated @RequestBody Book book) {
-        book.setId(id);
+    public Result<Void> update(@PathVariable Long id, @Validated @RequestBody BookUpdateDTO dto) {
+        Book book = new Book();
+        BeanUtils.copyProperties(dto, book);
+        book.setId(id);  // id 从路径来,不从 body 来
+
         boolean ok = bookService.updateById(book);
         return ok ? Result.ok() : Result.error(ErrorCode.BOOK_NOT_FOUND);
     }
