@@ -13,4 +13,4 @@ CREATE TABLE IF NOT EXISTS user (
 
 -- 插入一个测试管理员账号(密码: admin123)
 INSERT INTO user (username, password_hash, email, role) VALUES
-('admin', '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOG7.yNvZPmXi', 'admin@example.com', 'ADMIN');
+('admin', '$2a$10$xH3w/vrPAqudlrIOLzRvtOTR.YpT499i/yuudQ7Y4x02FEGE3WJku', 'admin@example.com', 'ADMIN');
