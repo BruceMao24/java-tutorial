@@ -102,4 +102,19 @@ public class User {
     public void setDeleted(Integer deleted) {
         this.deleted = deleted;
     }
+
+    // 重写 toString：打印对象时能看到字段值，而不是默认的"类名@哈希码"
+    // 注意：故意不输出 passwordHash，密码哈希也不应出现在日志/控制台
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", role='" + role + '\'' +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", deleted=" + deleted +
+                '}';
+    }
 }

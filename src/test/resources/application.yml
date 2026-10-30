@@ -2,9 +2,9 @@
 # 指向独立的测试库，跑测试绝不动开发库数据
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/java_tutorial_test?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
-    username: tutorial
-    password: Tutorial@123
+    url: jdbc:mysql://mysql6.sqlpub.com:3311/java_tutorial?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&useSSL=false
+    username: maokun
+    password: qDQIgVOdjd1kCPJB
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 greeting:
