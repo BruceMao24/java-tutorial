@@ -75,4 +75,23 @@ public class UserServiceImpl implements UserService {
     public User getById(Long id) {
         return userMapper.selectById(id);
     }
+
+    @Override
+    public void changePassword(Long userId, String oldPassword, String newPassword) {
+        // 1. 先查询当前用户
+        User user = userMapper.selectById(userId);
+        if (user == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND);
+        }
+
+        // 2. 验证旧密码是否正确
+        if (!passwordEncoder.matches(oldPassword, user.getPasswordHash())) {
+            throw new BusinessException(ErrorCode.PASSWORD_INCORRECT);
+        }
+
+        // 3. 加密新密码并更新
+        String newPasswordHash = passwordEncoder.encode(newPassword);
+        user.setPasswordHash(newPasswordHash);
+        userMapper.updateById(user);
+    }
 }

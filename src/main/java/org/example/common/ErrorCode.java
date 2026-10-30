@@ -30,6 +30,9 @@ public enum ErrorCode {
     /** 未登录或 token 无效 */
     UNAUTHORIZED(20006, "未登录或登录已过期"),
 
+    /** 旧密码错误 */
+    PASSWORD_INCORRECT(20007, "旧密码错误"),
+
     /** 系统内部错误 */
     INTERNAL_ERROR(50001, "系统内部错误");
 

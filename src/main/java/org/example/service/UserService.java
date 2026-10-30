@@ -33,4 +33,6 @@ public interface UserService {
      * 根据 ID 查询用户
      */
     User getById(Long id);
+
+    void changePassword(Long userId, String oldPassword, String newPassword);
 }

@@ -3,6 +3,7 @@ package org.example.controller;
 import org.example.common.ErrorCode;
 import org.example.common.Result;
 import org.example.dto.LoginResponse;
+import org.example.dto.PasswordChangeDTO;
 import org.example.dto.UserLoginDTO;
 import org.example.dto.UserProfileResponse;
 import org.example.dto.UserRegisterDTO;
@@ -13,11 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 用户接口:注册、登录、个人信息
@@ -93,5 +90,16 @@ public class UserController {
         );
 
         return Result.ok(response);
+    }
+
+    @PutMapping("/password")
+    public Result<Void> password(@Validated @RequestBody PasswordChangeDTO dto, HttpServletRequest request) {
+        if (!dto.getNewPassword().equals(dto.getConfirmPassword())) {
+            throw new BusinessException(ErrorCode.PASSWORD_MISMATCH);
+        }
+
+        Long userId = (Long) request.getAttribute("userId");
+        userService.changePassword(userId, dto.getOldPassword(), dto.getNewPassword());
+        return Result.ok();
     }
 }
