@@ -6,6 +6,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("hello world");
 
+        // 多态的体现
         Person p = new Student("maokun", "male", 31, 99);
         System.out.println(p.getName() + " " + p.getSex() + " " + p.getAge());
         p.setName("xiaodi");
